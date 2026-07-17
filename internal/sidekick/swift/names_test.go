@@ -290,6 +290,9 @@ func TestProtoFieldNamePascal(t *testing.T) {
 		{input: "unknown_fields", want: "UnknownFields_p"},
 		{input: "unknownFields", want: "UnknownFields_p"},
 		{input: "some_id", want: "SomeID"},
+		{input: "self", want: "Self"},
+		{input: "class", want: "Class"},
+		{input: "protocol", want: "Protocol"},
 	} {
 		t.Run(test.input, func(t *testing.T) {
 			got := protoFieldNamePascal(test.input)

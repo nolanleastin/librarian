@@ -238,7 +238,7 @@ func protoFieldNamePascal(s string) string {
 			result.WriteString(strcase.ToCamel(part))
 		}
 	}
-	return escapeKeyword(result.String())
+	return result.String()
 }
 
 // pascalCase converts an identifier to PascalCase (note the leading uppercase) and, if needed, escapes it.
