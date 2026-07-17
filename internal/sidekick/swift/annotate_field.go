@@ -251,13 +251,16 @@ func (c *codec) computeFieldConversionStatements(field *api.Field, ann *fieldAnn
 	pFieldName := protoFieldName(field.Name)
 	protoFieldNamePascal := protoFieldNamePascal(field.Name)
 
+	// Oneof fields are handled in a subsequent PR.
 	if field.IsOneOf {
 		return
 	}
+	// Map and Repeated fields are handled in subsequent PRs.
 	if field.Map || field.Repeated {
 		return
 	}
 	switch field.Typez {
+	// Nested Message and Enum type fields are handled in a subsequent PR.
 	case api.TypezMessage, api.TypezEnum:
 		return
 	default:
