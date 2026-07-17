@@ -246,4 +246,3 @@ func TestAnnotateEnum_NestedModulePath(t *testing.T) {
 		t.Errorf("ann.ProtoTypeName = %q, want %q", ann.ProtoTypeName, wantProtoTypeName)
 	}
 }
-

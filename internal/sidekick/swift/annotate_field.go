@@ -254,11 +254,9 @@ func (c *codec) computeFieldConversionStatements(field *api.Field, ann *fieldAnn
 	if field.IsOneOf {
 		return
 	}
-
 	if field.Map || field.Repeated {
 		return
 	}
-
 	switch field.Typez {
 	case api.TypezMessage, api.TypezEnum:
 		return
