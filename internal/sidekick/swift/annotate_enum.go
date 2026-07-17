@@ -137,7 +137,7 @@ func (c *codec) annotateEnum(enum *api.Enum, model *modelAnnotations) error {
 		ModulePath:        c.ModulePath,
 	}
 	if c.ModulePath != "" {
-		annotations.ProtoTypeName = fmt.Sprintf("%s.%s%s", c.ModulePath, ProtoPackagePrefix(enum.Package), pascalCase(enum.Name))
+		annotations.ProtoTypeName = c.protoEnumTypeName(enum)
 	}
 
 	enum.Codec = annotations
