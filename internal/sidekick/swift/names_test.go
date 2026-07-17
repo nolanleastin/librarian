@@ -243,6 +243,7 @@ func TestProtoFieldName(t *testing.T) {
 		input string
 		want  string
 	}{
+		{input: "self", want: "self_p"},
 		{input: "name", want: "name"},
 		{input: "display_name", want: "displayName"},
 		{input: "_leading_underscore", want: "leadingUnderscore"},
@@ -290,7 +291,7 @@ func TestProtoFieldNamePascal(t *testing.T) {
 		{input: "unknown_fields", want: "UnknownFields_p"},
 		{input: "unknownFields", want: "UnknownFields_p"},
 		{input: "some_id", want: "SomeID"},
-		{input: "self", want: "Self"},
+		{input: "self", want: "Self_p"},
 		{input: "class", want: "Class"},
 		{input: "protocol", want: "Protocol"},
 	} {

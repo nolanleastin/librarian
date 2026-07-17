@@ -172,6 +172,8 @@ func protoFieldName(s string) string {
 	// protocols (e.g. CustomStringConvertible, CustomDebugStringConvertible, Hashable)
 	// or the SwiftProtobuf.Message protocol properties to avoid compiler errors.
 	switch s {
+	case "self":
+		return "self_p"
 	case "description":
 		return "description_p"
 	case "debug_description", "debugDescription":
@@ -213,6 +215,8 @@ func protoFieldNamePascal(s string) string {
 	// or the SwiftProtobuf.Message protocol properties to avoid compiler errors.
 	// We retain the "_p" casing for the PascalCase property representations (e.g., hasDescription_p).
 	switch s {
+	case "self":
+		return "Self_p"
 	case "description":
 		return "Description_p"
 	case "debug_description", "debugDescription":

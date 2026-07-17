@@ -99,12 +99,12 @@ func TestGenerateConversions_Message(t *testing.T) {
 	}
 
 	// Check conversion logic
-	wantInit := "  internal init(proto: ProtoType) throws {\n    self.name = proto.name\n    self.metageneration = proto.metageneration\n    self.self_ = proto.hasSelf ? proto.self_ : nil\n  }"
+	wantInit := "  internal init(proto: ProtoType) throws {\n    self.name = proto.name\n    self.metageneration = proto.metageneration\n    self.self_ = proto.hasSelf_p ? proto.self_p : nil\n  }"
 	if !strings.Contains(contentStr, wantInit) {
 		t.Errorf("expected generated file to contain init(proto:) implementation:\n%s\nGot:\n%s", wantInit, contentStr)
 	}
 
-	wantToProto := "  internal func toProto() throws -> ProtoType {\n    var proto = ProtoType()\n    proto.name = self.name\n    proto.metageneration = self.metageneration\n    if let self_ = self.self_ { proto.self_ = self_ }\n    return proto\n  }"
+	wantToProto := "  internal func toProto() throws -> ProtoType {\n    var proto = ProtoType()\n    proto.name = self.name\n    proto.metageneration = self.metageneration\n    if let self_ = self.self_ { proto.self_p = self_ }\n    return proto\n  }"
 	if !strings.Contains(contentStr, wantToProto) {
 		t.Errorf("expected generated file to contain toProto() implementation:\n%s\nGot:\n%s", wantToProto, contentStr)
 	}
