@@ -237,3 +237,46 @@ func TestProtoPackagePrefix(t *testing.T) {
 		})
 	}
 }
+
+func TestProtoFieldName(t *testing.T) {
+	for _, test := range []struct {
+		input string
+		want  string
+	}{
+		{input: "name", want: "name"},
+		{input: "display_name", want: "displayName"},
+		{input: "_leading_underscore", want: "leadingUnderscore"},
+		{input: "__multiple_leading", want: "multipleLeading"},
+		{input: "description", want: "description_p"},
+		{input: "some_id", want: "someID"},
+	} {
+		t.Run(test.input, func(t *testing.T) {
+			got := protoFieldName(test.input)
+			if got != test.want {
+				t.Errorf("protoFieldName(%q) = %q, want %q", test.input, got, test.want)
+			}
+		})
+	}
+}
+
+func TestProtoFieldNamePascal(t *testing.T) {
+	for _, test := range []struct {
+		input string
+		want  string
+	}{
+		{input: "name", want: "Name"},
+		{input: "display_name", want: "DisplayName"},
+		{input: "_leading_underscore", want: "LeadingUnderscore"},
+		{input: "__multiple_leading", want: "MultipleLeading"},
+		{input: "description", want: "DescriptionP"},
+		{input: "some_id", want: "SomeID"},
+	} {
+		t.Run(test.input, func(t *testing.T) {
+			got := protoFieldNamePascal(test.input)
+			if got != test.want {
+				t.Errorf("protoFieldNamePascal(%q) = %q, want %q", test.input, got, test.want)
+			}
+		})
+	}
+}
+

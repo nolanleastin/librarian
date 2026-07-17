@@ -173,12 +173,14 @@ func protoFieldName(s string) string {
 	}
 	parts := strings.Split(s, "_")
 	var result strings.Builder
-	for i, part := range parts {
+	first := true
+	for _, part := range parts {
 		if part == "" {
 			continue
 		}
-		if i == 0 {
+		if first {
 			result.WriteString(strcase.ToLowerCamel(part))
+			first = false
 		} else {
 			if strings.ToLower(part) == "id" {
 				result.WriteString("ID")
