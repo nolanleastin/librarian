@@ -226,12 +226,20 @@ func (c *codec) protoMessageTypeName(m *api.Message) string {
 		curr = curr.Parent
 	}
 	slices.Reverse(path)
-	return fmt.Sprintf("%s.%s%s", c.ModulePath, ProtoPackagePrefix(m.Package), strings.Join(path, "."))
+	fullName := fmt.Sprintf("%s%s", ProtoPackagePrefix(m.Package), strings.Join(path, "."))
+	if c.ModulePath != "" {
+		return fmt.Sprintf("%s.%s", c.ModulePath, fullName)
+	}
+	return fullName
 }
 
 func (c *codec) protoEnumTypeName(e *api.Enum) string {
 	if e.Parent == nil {
-		return fmt.Sprintf("%s.%s%s", c.ModulePath, ProtoPackagePrefix(e.Package), pascalCase(e.Name))
+		fullName := fmt.Sprintf("%s%s", ProtoPackagePrefix(e.Package), pascalCase(e.Name))
+		if c.ModulePath != "" {
+			return fmt.Sprintf("%s.%s", c.ModulePath, fullName)
+		}
+		return fullName
 	}
 	return fmt.Sprintf("%s.%s", c.protoMessageTypeName(e.Parent), pascalCase(e.Name))
 }
