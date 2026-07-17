@@ -55,14 +55,21 @@ func TestGenerateConversions_Message(t *testing.T) {
 		JSONName: "metageneration",
 		Typez:    api.TypezInt64,
 	}
+	field3 := &api.Field{
+		Name:     "self",
+		JSONName: "self",
+		Typez:    api.TypezString,
+		Optional: true,
+	}
 	folder := &api.Message{
 		Name:    "Folder",
 		Package: "google.storage.control.v2",
 		ID:      ".google.storage.control.v2.Folder",
-		Fields:  []*api.Field{field1, field2},
+		Fields:  []*api.Field{field1, field2, field3},
 	}
 	field1.Parent = folder
 	field2.Parent = folder
+	field3.Parent = folder
 
 	model := api.NewTestAPI([]*api.Message{folder}, []*api.Enum{}, []*api.Service{})
 	model.PackageName = "google.storage.control.v2"
@@ -92,12 +99,12 @@ func TestGenerateConversions_Message(t *testing.T) {
 	}
 
 	// Check conversion logic
-	wantInit := "  internal init(proto: ProtoType) throws {\n    self.name = proto.name\n    self.metageneration = proto.metageneration\n  }"
+	wantInit := "  internal init(proto: ProtoType) throws {\n    self.name = proto.name\n    self.metageneration = proto.metageneration\n    self.self_ = proto.hasSelf ? proto.self_ : nil\n  }"
 	if !strings.Contains(contentStr, wantInit) {
 		t.Errorf("expected generated file to contain init(proto:) implementation:\n%s\nGot:\n%s", wantInit, contentStr)
 	}
 
-	wantToProto := "  internal func toProto() throws -> ProtoType {\n    var proto = ProtoType()\n    proto.name = self.name\n    proto.metageneration = self.metageneration\n    return proto\n  }"
+	wantToProto := "  internal func toProto() throws -> ProtoType {\n    var proto = ProtoType()\n    proto.name = self.name\n    proto.metageneration = self.metageneration\n    if let self_ = self.self_ { proto.self_ = self_ }\n    return proto\n  }"
 	if !strings.Contains(contentStr, wantToProto) {
 		t.Errorf("expected generated file to contain toProto() implementation:\n%s\nGot:\n%s", wantToProto, contentStr)
 	}
