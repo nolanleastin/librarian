@@ -168,8 +168,22 @@ func camelCase(s string) string {
 
 // protoFieldName converts a protobuf field name to its corresponding SwiftProtobuf property name.
 func protoFieldName(s string) string {
-	if s == "description" {
+	// SwiftProtobuf appends a "_p" suffix to fields that conflict with standard Swift library
+	// protocols (e.g. CustomStringConvertible, CustomDebugStringConvertible, Hashable)
+	// or the SwiftProtobuf.Message protocol properties to avoid compiler errors.
+	switch s {
+	case "description":
 		return "description_p"
+	case "debug_description", "debugDescription":
+		return "debugDescription_p"
+	case "hash_value", "hashValue":
+		return "hashValue_p"
+	case "is_initialized", "isInitialized":
+		return "isInitialized_p"
+	case "serialized_size", "serializedSize":
+		return "serializedSize_p"
+	case "unknown_fields", "unknownFields":
+		return "unknownFields_p"
 	}
 	parts := strings.Split(s, "_")
 	var result strings.Builder
@@ -194,8 +208,23 @@ func protoFieldName(s string) string {
 
 // protoFieldNamePascal converts a protobuf field name to its corresponding SwiftProtobuf PascalCase name (used for hasField helpers).
 func protoFieldNamePascal(s string) string {
-	if s == "description" {
-		return "DescriptionP"
+	// SwiftProtobuf appends a "_p" suffix to fields that conflict with standard Swift library
+	// protocols (e.g. CustomStringConvertible, CustomDebugStringConvertible, Hashable)
+	// or the SwiftProtobuf.Message protocol properties to avoid compiler errors.
+	// We retain the "_p" casing for the PascalCase property representations (e.g., hasDescription_p).
+	switch s {
+	case "description":
+		return "Description_p"
+	case "debug_description", "debugDescription":
+		return "DebugDescription_p"
+	case "hash_value", "hashValue":
+		return "HashValue_p"
+	case "is_initialized", "isInitialized":
+		return "IsInitialized_p"
+	case "serialized_size", "serializedSize":
+		return "SerializedSize_p"
+	case "unknown_fields", "unknownFields":
+		return "UnknownFields_p"
 	}
 	parts := strings.Split(s, "_")
 	var result strings.Builder
