@@ -19,9 +19,9 @@ extension {{Codec.NativeTypeName}} {
   internal init(proto: ProtoType) throws {
     {{#Fields}}
     {{^OneOf}}
-    {{#Codec.ToVeneerStatement}}
+    {{#Codec.ToGapicStatement}}
     {{{.}}}
-    {{/Codec.ToVeneerStatement}}
+    {{/Codec.ToGapicStatement}}
     {{/OneOf}}
     {{/Fields}}
   }

@@ -70,10 +70,10 @@ type fieldAnnotations struct {
 	// Model points to the annotations for the model.
 	Model *modelAnnotations
 
-	// ToVeneerStatement converts the field from a proto representation to a veneer.
-	ToVeneerStatement string
+	// ToGapicStatement converts the field from a proto representation to a GAPIC model.
+	ToGapicStatement string
 
-	// ToProtoStatement converts the field from a veneer representation to a proto.
+	// ToProtoStatement converts the field from a GAPIC model representation to a proto.
 	ToProtoStatement string
 }
 
@@ -262,10 +262,10 @@ func (c *codec) computeFieldConversionStatements(field *api.Field, ann *fieldAnn
 		return
 	default:
 		if field.Optional {
-			ann.ToVeneerStatement = fmt.Sprintf("self.%s = proto.has%s ? proto.%s : nil", fieldName, protoFieldNamePascal, pFieldName)
+			ann.ToGapicStatement = fmt.Sprintf("self.%s = proto.has%s ? proto.%s : nil", fieldName, protoFieldNamePascal, pFieldName)
 			ann.ToProtoStatement = fmt.Sprintf("if let %s = self.%s { proto.%s = %s }", fieldName, fieldName, pFieldName, fieldName)
 		} else {
-			ann.ToVeneerStatement = fmt.Sprintf("self.%s = proto.%s", fieldName, pFieldName)
+			ann.ToGapicStatement = fmt.Sprintf("self.%s = proto.%s", fieldName, pFieldName)
 			ann.ToProtoStatement = fmt.Sprintf("proto.%s = self.%s", pFieldName, fieldName)
 		}
 	}
