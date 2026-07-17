@@ -19,7 +19,9 @@ extension {{Codec.NativeTypeName}} {
   internal init(proto: ProtoType) throws {
     {{#Fields}}
     {{^OneOf}}
-    {{{Codec.ToVeneerStatement}}}
+    {{#Codec.ToVeneerStatement}}
+    {{{.}}}
+    {{/Codec.ToVeneerStatement}}
     {{/OneOf}}
     {{/Fields}}
   }
@@ -28,7 +30,9 @@ extension {{Codec.NativeTypeName}} {
     var proto = ProtoType()
     {{#Fields}}
     {{^OneOf}}
-    {{{Codec.ToProtoStatement}}}
+    {{#Codec.ToProtoStatement}}
+    {{{.}}}
+    {{/Codec.ToProtoStatement}}
     {{/OneOf}}
     {{/Fields}}
     return proto
